@@ -1,0 +1,7 @@
+services:
+  - type: web
+    name: bun
+    runtime: docker
+    repo: https://github.com/JieeiroSst/firework
+    plan: starter
+    autoDeploy: false

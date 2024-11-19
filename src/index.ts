@@ -20,7 +20,7 @@ app.get('/', (c) => {
           width: 100%;
           padding: 0;
           margin: 0;
-          background-image: url('https://hoanghamobile.com/tin-tuc/wp-content/uploads/2023/08/hinh-nen-bau-troi-thump.jpg');
+          background-image: url('https://imagenes.elpais.com/resizer/v2/2DHJ4HXONFDR7OY2EGKOQMSWMI.jpg?auth=ce7481eb3658be32046f294bcc9366a4118c542a0984464c216f7f0a5385bb2e&width=1960&height=1470&smart=true');
           background-repeat:no-repeat;
           background-position: center center;
           -webkit-background-size: cover;
@@ -81,7 +81,7 @@ app.get('/', (c) => {
         let particles = [];
 
         function createFirework() {
-          let particleCount = random(100, 200);
+          let particleCount = random(100, 300);
           let x = random(0, canvas.width);
           let y = canvas.height;
           let color = getRandomColor();
@@ -104,7 +104,7 @@ app.get('/', (c) => {
             }
           }
 
-          if (Math.random() < 0.05) {
+          if (Math.random() < 0.01) {
             createFirework();
           }
         }
@@ -117,4 +117,7 @@ app.get('/', (c) => {
   return c.html(html);
 });
 
-export default app;
+export default { 
+  port: process.env.PORT || 3000, 
+  fetch: app.fetch, 
+} 
