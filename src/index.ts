@@ -47,6 +47,11 @@ app.get('/', (c) => {
           return Math.random() * (max - min) + min;
         }
 
+        function getRandomColor(){
+            var color =  "#" + (Math.random() * 0xFFFFFF << 0).toString(16);
+            return color;
+        }
+
         function Particle(x, y, dx, dy, color) {
           this.x = x;
           this.y = y;
@@ -79,7 +84,7 @@ app.get('/', (c) => {
           let particleCount = random(100, 200);
           let x = random(0, canvas.width);
           let y = canvas.height;
-          let color = "";
+          let color = getRandomColor();
 
           for (let i = 0; i < particleCount; i++) {
             let dx = random(-10, 10);
