@@ -1,19 +1,19 @@
 import { Hono } from 'hono';
 import { serveStatic } from 'hono/bun';
-import { readFileSync } from 'fs';
-import * as ejs from 'ejs';
+import { getConnInfo } from 'hono/cloudflare-workers'
 
 const app = new Hono();
 
 app.use('/static/*', serveStatic({ root: './public' }));
 
-app.get('/', (c) => {
+app.get('/',async (c) => {
   const name = 'firework';
   const html = `
     <!DOCTYPE html>
     <html>
     <head>
         <title>${name}</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
         <style>
           body {
           height: 100%;
@@ -32,10 +32,37 @@ app.get('/', (c) => {
       canvas {
           display: block;
       }
+		.marquee {
+            overflow: hidden;
+            white-space: nowrap;
+        }
+        .inner-marquee {
+            animation: marquee 15s linear infinite;
+			color: #F08080;
+        }
+        @keyframes marquee {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
         </style>
     </head>
     <body>
+		<div class="inner-marquee">
+            💖 ❤️‍🔥 💟 💗 ♡<3💕 
+        </div>
+		<div class="inner-marquee">
+            ﮩـﮩﮩ٨ـ♡ﮩ٨ـﮩﮩ٨ـ ♡ ₍ ᐢ..ᐢ ₎ ♡
+        </div>
+		<div class="inner-marquee">
+            ♥‿♥ 💘 (*＞ω＜*)♡
+        </div>
         <canvas id="canvas"></canvas>
+		<script>
+       const marquee = document.querySelector('.inner-marquee');
+        marquee.addEventListener('click', () => {
+            marquee.style.animationDuration = '3s';
+        });
+    </script>
         <script>
         window.requestAnimFrame = ( function() {
 	return window.requestAnimationFrame ||
@@ -245,6 +272,9 @@ window.onload = loop;
     </body>
     </html>
   `;
+  const info = getConnInfo(c)
+  const ipAddress = info.remote.address; // Adjust for your platform
+  console.log(`Incoming request from IP: ${ipAddress}`);
   return c.html(html);
 });
 

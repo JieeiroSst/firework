@@ -8,4 +8,4 @@ To run:
 bun run dev
 ```
 
-open [http://localhost:3000](https://firework-h1xg.onrender.com)
+open [firework](https://firework-h1xg.onrender.com)
